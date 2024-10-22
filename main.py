@@ -33,5 +33,12 @@ def run_launch():
     GPIO.output(in2,GPIO.LOW)
     return "success"
 
+@app.route("/api/reverse")
+def reverse_launch():
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+    sleep(1)
+    GPIO.output(in2,GPIO.HIGH)
+    return "success"
 
 app.run()
