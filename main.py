@@ -1,11 +1,17 @@
-#import RPi.GPIO as GPIO # type: ignore
+import RPi.GPIO as GPIO # type: ignore
 from flask import Flask
 from flask import send_from_directory,redirect, url_for
-import launch from hardware
+from hardware import launch
 import os
+from time import sleep
 app = Flask(__name__,static_folder='public')
 
-
+in1 = 5
+in2 = 6
+GPIO.setmode(GPIO.BCM)
+#GPIO are output ports
+GPIO.setup(in1,GPIO.OUT)
+GPIO.setup(in2,GPIO.OUT)
 
 @app.route("/")
 def indexhtml():
@@ -21,7 +27,11 @@ def hello_world(name):
 
 @app.route("/api/launch")
 def run_launch():
-    launch()
+    GPIO.output(in1,GPIO.LOW)
+    GPIO.output(in2,GPIO.HIGH)
+    sleep(1)
+    GPIO.output(in2,GPIO.LOW)
+    return "success"
 
 
 app.run()
