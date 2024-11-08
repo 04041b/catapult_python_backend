@@ -13,18 +13,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(in1,GPIO.OUT)
 GPIO.setup(in2,GPIO.OUT)
 
-@app.route("/")
-def indexhtml():
-    return send_from_directory(app.static_folder,"index.html")
-
-@app.route("/<path:name>")
-def hello_world(name):
-    print(name)
-
-    return send_from_directory(
-    app.static_folder,name
-    )
-
 @app.route("/api/launch")
 def run_launch():
     GPIO.output(in1,GPIO.LOW)
@@ -41,4 +29,17 @@ def reverse_launch():
     GPIO.output(in2,GPIO.HIGH)
     return "success"
 
-app.run()
+@app.route("/")
+def indexhtml():
+    return send_from_directory(app.static_folder,"index.html")
+
+@app.route("/<path:name>")
+def hello_world(name):
+    print(name)
+
+    return send_from_directory(
+    app.static_folder,name
+    )
+
+
+app.run(host='0.0.0.0')
